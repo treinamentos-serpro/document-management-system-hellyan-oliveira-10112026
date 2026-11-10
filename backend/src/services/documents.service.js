@@ -1,18 +1,8 @@
 const { randomUUID } = require('node:crypto');
 const repository = require('../repositories/documents.repository');
 
-function toPublicDocument(document) {
-  return {
-    id: document.id,
-    originalName: document.originalName,
-    size: document.size,
-    uploadedAt: document.uploadedAt,
-    owner: document.owner,
-  };
-}
-
 function createDocument(file, owner) {
-  const document = repository.save({
+  return repository.save({
     id: randomUUID(),
     originalName: file.originalname,
     size: file.size,
@@ -22,11 +12,10 @@ function createDocument(file, owner) {
     storagePath: file.path,
     mimeType: file.mimetype,
   });
-  return toPublicDocument(document);
 }
 
 function listDocuments(owner) {
-  return repository.findByOwner(owner).map(toPublicDocument);
+  return repository.findByOwner(owner);
 }
 
 function getDocument(id, owner) {

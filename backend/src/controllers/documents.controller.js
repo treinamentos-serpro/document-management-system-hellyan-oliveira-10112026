@@ -102,6 +102,16 @@ function requireUser(req, res, next) {
   next();
 }
 
+function toPublicDocument(document) {
+  return {
+    id: document.id,
+    originalName: document.originalName,
+    size: document.size,
+    uploadedAt: document.uploadedAt,
+    owner: document.owner,
+  };
+}
+
 /**
  * @openapi
  * /upload:
@@ -144,7 +154,7 @@ function upload(req, res) {
       error: { code: 'INVALID_REQUEST', message: 'Envie um arquivo no campo file.' },
     });
   }
-  res.status(201).json(service.createDocument(req.file, res.locals.owner));
+  res.status(201).json(toPublicDocument(service.createDocument(req.file, res.locals.owner)));
 }
 
 /**
@@ -172,7 +182,7 @@ function upload(req, res) {
  *         $ref: '#/components/responses/InternalError'
  */
 function list(req, res) {
-  res.json(service.listDocuments(res.locals.owner));
+  res.json(service.listDocuments(res.locals.owner).map(toPublicDocument));
 }
 
 /**
