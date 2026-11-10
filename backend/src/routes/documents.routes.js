@@ -25,7 +25,7 @@ const upload = multer({
       callback(null, randomUUID());
     },
   }),
-  limits: { fileSize: maxFileSize, files: 1 },
+  limits: { fileSize: maxFileSize, files: 1, fields: 0, parts: 1 },
 });
 
 const router = express.Router();

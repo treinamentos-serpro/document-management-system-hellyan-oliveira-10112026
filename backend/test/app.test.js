@@ -172,6 +172,14 @@ test('rejeita arquivo ausente, campo errado, multiplos arquivos e tamanho excedi
   });
   assert.strictEqual(multipleResponse.status, 400);
 
+  const extraField = new FormData();
+  extraField.append('file', new Blob(['conteudo']), 'documento.txt');
+  extraField.append('unexpected', 'valor');
+  const extraFieldResponse = await fetch(`${baseUrl}/upload`, {
+    method: 'POST', headers: { 'X-User-Id': 'alice' }, body: extraField,
+  });
+  assert.strictEqual(extraFieldResponse.status, 400);
+
   const oversized = await uploadFile('alice', Buffer.alloc(1025));
   assert.strictEqual(oversized.status, 413);
   assert.strictEqual((await oversized.json()).error.code, 'FILE_TOO_LARGE');
