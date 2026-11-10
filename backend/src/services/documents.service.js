@@ -11,8 +11,8 @@ function toPublicDocument(document) {
   };
 }
 
-function createDocument(file, owner) {
-  const document = repository.save({
+function buildDocument(file, owner) {
+  return {
     id: randomUUID(),
     originalName: file.originalname,
     size: file.size,
@@ -21,22 +21,27 @@ function createDocument(file, owner) {
     storedName: file.filename,
     storagePath: file.path,
     mimeType: file.mimetype,
-  });
-  return toPublicDocument(document);
+  };
+}
+
+function createDocument(file, owner) {
+  return toPublicDocument(repository.save(buildDocument(file, owner)));
 }
 
 function listDocuments(owner) {
   return repository.findByOwner(owner).map(toPublicDocument);
 }
 
+function createNotFoundError() {
+  const error = new Error('Documento nao encontrado.');
+  error.status = 404;
+  error.code = 'DOCUMENT_NOT_FOUND';
+  return error;
+}
+
 function getDocument(id, owner) {
   const document = repository.findById(id);
-  if (!document || document.owner !== owner) {
-    const error = new Error('Documento nao encontrado.');
-    error.status = 404;
-    error.code = 'DOCUMENT_NOT_FOUND';
-    throw error;
-  }
+  if (!document || document.owner !== owner) throw createNotFoundError();
   return document;
 }
 
