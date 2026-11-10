@@ -19,10 +19,12 @@ export default function DocumentList({ documents, userId, loading, error, onRefr
         </button>
       </div>
       {error && <p className="error-message" role="alert">{error}</p>}
-      {loading ? <p className="empty-state" role="status">Carregando documentos...</p> : (
-        documents.length === 0 ? (
+      {loading && <p className="status-message" role="status">Carregando documentos...</p>}
+      {documents.length === 0 ? (
+        !loading && (
           <p className="empty-state">{error ? 'Lista indisponível.' : 'Nenhum documento encontrado.'}</p>
-        ) : (
+        )
+      ) : (
           <ul className="document-list">
             {documents.map((document) => (
               <li className="document-row" key={document.id}>
@@ -37,7 +39,6 @@ export default function DocumentList({ documents, userId, loading, error, onRefr
               </li>
             ))}
           </ul>
-        )
       )}
     </section>
   );

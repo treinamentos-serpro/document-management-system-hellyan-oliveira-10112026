@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import DocumentList from './components/DocumentList.jsx';
 import UploadComponent from './components/UploadComponent.jsx';
-import { listDocuments } from './services/documents.api.js';
+import { getUserIdError, listDocuments } from './services/documents.api.js';
 import './styles.css';
 
 function DocumentWorkspace({ userId }) {
@@ -50,9 +50,13 @@ function DocumentWorkspace({ userId }) {
 export default function App() {
   const [userInput, setUserInput] = useState('');
   const [userId, setUserId] = useState('');
+  const [userError, setUserError] = useState('');
 
   function handleUserSubmit(event) {
     event.preventDefault();
+    const validationError = getUserIdError(userInput);
+    setUserError(validationError);
+    if (validationError) return;
     const nextUser = userInput.trim();
     if (nextUser) setUserId(nextUser);
   }
@@ -79,7 +83,12 @@ export default function App() {
                 autoComplete="username"
                 placeholder="Ex.: alice"
                 value={userInput}
-                onChange={(event) => setUserInput(event.target.value)}
+                aria-invalid={Boolean(userError)}
+                aria-describedby={userError ? 'user-error' : undefined}
+                onChange={(event) => {
+                  setUserInput(event.target.value);
+                  setUserError('');
+                }}
                 required
               />
               <button type="submit" disabled={!userInput.trim() || userInput.trim() === userId}>
@@ -87,6 +96,7 @@ export default function App() {
               </button>
             </div>
           </form>
+          {userError && <p id="user-error" className="error-message" role="alert">{userError}</p>}
           {userId && <p className="active-user">Usuário atual: <strong>{userId}</strong></p>}
         </section>
         {userId && <DocumentWorkspace key={userId} userId={userId} />}

@@ -1,4 +1,15 @@
+export function getUserIdError(userId) {
+  if (!userId.trim()) return 'Informe o identificador do usuario.';
+  if (/[^\x20-\x7e\xa0-\xff]/u.test(userId)) {
+    return 'Use um identificador sem caracteres de controle e apenas com caracteres Latin-1 (por exemplo: alice ou joao).';
+  }
+  return '';
+}
+
 async function request(path, userId, options = {}) {
+  const validationError = getUserIdError(userId);
+  if (validationError) throw new Error(validationError);
+
   const response = await fetch(`/api${path}`, {
     ...options,
     headers: { 'X-User-Id': userId },
