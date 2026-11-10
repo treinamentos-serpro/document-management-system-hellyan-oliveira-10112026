@@ -1,84 +1,35 @@
-# Document Management System com GitHub Copilot
+<div align="center">
 
-## Documentação da API
+# 🎉 Congratulations Copilot! 🎉
 
-Na raiz do projeto, instale as dependências e inicie o backend:
+<img src="https://octodex.github.com/images/welcometocat.png" height="200px" />
 
-```bash
-npm install --prefix backend
-npm run dev --prefix backend
-```
+### 🌟 You've successfully completed the exercise! 🌟
 
-- Swagger UI: <http://localhost:3000/api-docs/>
-- Especificação OpenAPI 3.0 em JSON: <http://localhost:3000/openapi.json>
+## 🚀 Share Your Success!
 
-Se configurar `PORT`, ajuste a porta nos endereços acima. A especificação é gerada
-das anotações `@openapi` em [documents.controller.js](backend/src/controllers/documents.controller.js).
-Os caminhos documentados são os do backend, sem o prefixo `/api` do proxy Vite.
+**Show off your new skills and inspire others!**
 
-No Swagger UI, abra uma operação e selecione **Try it out**. Informe `X-User-Id`
-(por exemplo, `alice`) nas operações de documentos. Para `POST /upload`, selecione
-um arquivo no campo `file`; use o `id` retornado para testar o download com o mesmo
-usuário. Esse cabeçalho não implementa autenticação.
+<a href="https://twitter.com/intent/tweet?text=I%20just%20completed%20the%20%22Document%20Management%20System%20com%20GitHub%20Copilot%22%20GitHub%20Skills%20hands-on%20exercise!%20%F0%9F%8E%89%0A%0Ahttps%3A%2F%2Fgithub.com%2Ftreinamentos-serpro%2Fdocument-management-system-hellyan-oliveira-10112026%0A%0A%23GitHubSkills%20%23OpenSource%20%23GitHubLearn" target="_blank" rel="noopener noreferrer">
+  <img src="https://img.shields.io/badge/Share%20on%20X-1da1f2?style=for-the-badge&logo=x&logoColor=white" alt="Share on X" />
+</a>
+<a href="https://bsky.app/intent/compose?text=I%20just%20completed%20the%20%22Document%20Management%20System%20com%20GitHub%20Copilot%22%20GitHub%20Skills%20hands-on%20exercise!%20%F0%9F%8E%89%0A%0Ahttps%3A%2F%2Fgithub.com%2Ftreinamentos-serpro%2Fdocument-management-system-hellyan-oliveira-10112026%0A%0A%23GitHubSkills%20%23OpenSource%20%23GitHubLearn" target="_blank" rel="noopener noreferrer">
+  <img src="https://img.shields.io/badge/Share%20on%20Bluesky-0085ff?style=for-the-badge&logo=bluesky&logoColor=white" alt="Share on Bluesky" />
+</a>
+<a href="https://www.linkedin.com/feed/?shareActive=true&text=I%20just%20completed%20the%20%22Document%20Management%20System%20com%20GitHub%20Copilot%22%20GitHub%20Skills%20hands-on%20exercise!%20%F0%9F%8E%89%0A%0Ahttps%3A%2F%2Fgithub.com%2Ftreinamentos-serpro%2Fdocument-management-system-hellyan-oliveira-10112026%0A%0A%23GitHubSkills%20%23OpenSource%20%23GitHubLearn" target="_blank" rel="noopener noreferrer">
+  <img src="https://img.shields.io/badge/Share%20on%20LinkedIn-0077b5?style=for-the-badge&logo=linkedin&logoColor=white" alt="Share on LinkedIn" />
+</a>
 
-Os arquivos ficam em `backend/storage` por padrão, configurável por `STORAGE_DIR`.
-O limite padrão é 10 MiB, configurável por `MAX_FILE_SIZE_BYTES`. Os metadados
-ficam em memória e são perdidos ao reiniciar o backend.
+### 🎯 What's Next?
 
-Para validar a API e a publicação da documentação:
+**Keep the momentum going!**
 
-```bash
-npm test --prefix backend
-```
+[![](https://img.shields.io/badge/Return%20to%20Exercise-%E2%86%92-1f883d?style=for-the-badge&logo=github&labelColor=197935)](https://github.com/treinamentos-serpro/document-management-system-hellyan-oliveira-10112026/issues/1)
+[![GitHub Skills](https://img.shields.io/badge/Explore%20GitHub%20Skills-000000?style=for-the-badge&logo=github&logoColor=white)](https://learn.github.com/skills)
 
-## Interface web
+*There's no better way to learn than building things!* 🚀
 
-Com o backend em execução na porta 3000, inicie o frontend em outro terminal:
-
-```bash
-npm install --prefix frontend
-npm run dev --prefix frontend
-```
-
-Acesse <http://localhost:5173> (ou a URL informada pelo Vite). Informe um
-identificador de usuário e selecione **Abrir documentos** para enviar, listar
-e baixar arquivos. O identificador é enviado no cabeçalho `X-User-Id` e não
-representa autenticação. Ao trocar de usuário, a interface limpa a lista anterior.
-O identificador aceita caracteres Latin-1, inclusive acentos como em `joão`,
-mas não caracteres de controle ou fora desse conjunto, incompatíveis com o
-cabeçalho enviado pelo navegador.
-
-O cliente usa `fetch` com o prefixo `/api`; o proxy de desenvolvimento do Vite
-encaminha essas chamadas ao backend local. Em produção, configure o servidor
-para encaminhar `/api` ao backend, removendo esse prefixo.
-
-Para executar os testes do cliente de API e dos componentes e gerar a versão de produção:
-
-```bash
-npm test --prefix frontend
-npm run build --prefix frontend
-```
-
-Os testes de API usam o runner nativo do Node e simulam `fetch`. Os testes de
-componentes usam Vitest, Testing Library e jsdom, cobrindo upload, download,
-troca de usuário, cancelamento e recuperação de erros. As duas suítes rodam sem
-backend em execução e também podem ser executadas separadamente com
-`npm run test:api --prefix frontend` e `npm run test:components --prefix frontend`.
-Para validar a integração manualmente, envie um arquivo,
-confira sua presença na lista, baixe-o e compare o conteúdo. Troque o identificador
-para confirmar que os documentos do usuário anterior não aparecem.
-
-## Workshop
-
-<img src="https://octodex.github.com/images/Professortocat_v2.png" align="right" height="200px" />
-
-Hey hellyanalves!
-
-Mona here. I'm done preparing your exercise. Hope you enjoy! 💚
-
-Remember, it's self-paced so feel free to take a break! ☕️
-
-[![](https://img.shields.io/badge/Go%20to%20Exercise-%E2%86%92-1f883d?style=for-the-badge&logo=github&labelColor=197935)](https://github.com/treinamentos-serpro/document-management-system-hellyan-oliveira-10112026/issues/1)
+</div>
 
 ---
 
